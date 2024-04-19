@@ -23,5 +23,6 @@ public class MainApp {
       userService.addCarUser(new User("user1", "lastName1", "mail.ass"),
               new Car("Lamba", 5600));
 
+      System.out.println(userService.findUserByCar("Lamba", 5600));
    }
 }

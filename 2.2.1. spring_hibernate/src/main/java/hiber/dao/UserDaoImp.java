@@ -2,9 +2,12 @@ package hiber.dao;
 
 import hiber.model.Car;
 import hiber.model.User;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -21,11 +24,13 @@ public class UserDaoImp implements UserDao {
    public void add(User user) {
      sessionFactory.getCurrentSession().save(user);
    }
+
+   @Transactional
    public void addCarUser(User user, Car car)   {
-      EntityManager manager = sessionFactory.createEntityManager();
-      manager.persist(user);
+      Session session = sessionFactory.getCurrentSession();
+      session.save(user);
       car.setUser(user);
-      manager.persist(car);
+      session.save(car);
    }
 
    @Override
@@ -48,5 +53,15 @@ public class UserDaoImp implements UserDao {
       sessionFactory.getCurrentSession().save(car);
    }
 
+   @Override
+   @Transactional
+   public User findUserByCar(String model, int series) {
+      Session session = sessionFactory.getCurrentSession();
+      Query<User> query = session.createQuery(
+              "SELECT car.user FROM Car car WHERE car.model = :model AND car.series = :series", User.class);
+      query.setParameter("model", model);
+      query.setParameter("series", series);
 
+      return query.getSingleResult();
+   }
 }
