@@ -9,8 +9,12 @@ import javax.persistence.*;
 @Table(name = "newtype.cars")
 public class Car {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
+    private User user;
 
     @Column(name = "model")
     private String model;
@@ -18,8 +22,6 @@ public class Car {
     @Column(name = "series")
     private int series;
 
-    @OneToOne
-    private User user;
 
     public Car() {
     }
@@ -57,15 +59,15 @@ public class Car {
         return user;
     }
 
-    public User setUser(User user) {
+    public void setUser(User user) {
         this.user = user;
-        return user;
     }
 
     @Override
     public String toString() {
-        return "Car {" +
+        return "Car{" +
                 "id=" + id +
+                ", user=" + user +
                 ", model='" + model + '\'' +
                 ", series=" + series +
                 '}';

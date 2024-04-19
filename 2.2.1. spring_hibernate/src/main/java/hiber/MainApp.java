@@ -19,12 +19,9 @@ public class MainApp {
 //      userService.add(new User("User2", "Lastname2", "user2@mail.ru"));
 //      userService.add(new User("User3", "Lastname3", "user3@mail.ru"));
 //      userService.add(new User("User4", "Lastname4", "user4@mail.ru"));
-
-      Car volga = new Car("Volga", 0);
-      Car lada = new Car("Lada", 5);
-      Car haval = new Car("Haval", 4);
-      Car mitsibushi = new Car("Mitsubishi", 1111);
-
+//      userService.add(new User("User1", "Lastname1", "user1@mail.ru"));
+      userService.addCarUser(new User("user1", "lastName1", "mail.ass"),
+              new Car("Lamba", 5600));
 
    }
 }

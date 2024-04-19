@@ -1,22 +1,31 @@
 package hiber.dao;
 
+import hiber.model.Car;
 import hiber.model.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
 public class UserDaoImp implements UserDao {
 
+
    @Autowired
    private SessionFactory sessionFactory;
 
    @Override
    public void add(User user) {
-      sessionFactory.getCurrentSession().save(user);
+     sessionFactory.getCurrentSession().save(user);
+   }
+   public void addCarUser(User user, Car car)   {
+      EntityManager manager = sessionFactory.createEntityManager();
+      manager.persist(user);
+      car.setUser(user);
+      manager.persist(car);
    }
 
    @Override
@@ -32,6 +41,11 @@ public class UserDaoImp implements UserDao {
       TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(hql);
       query.setParameter("model" , model).setParameter("series", series);
       return query.getSingleResult();
+   }
+
+   @Override
+   public void addCar(Car car) {
+      sessionFactory.getCurrentSession().save(car);
    }
 
 
