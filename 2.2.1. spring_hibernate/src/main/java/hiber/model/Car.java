@@ -1,18 +1,15 @@
 package hiber.model;
-
-import hiber.dao.UserDao;
-
 import javax.persistence.*;
-
 
 @Entity
 @Table(name = "newtype.cars")
 public class Car {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
-    @MapsId
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "model")

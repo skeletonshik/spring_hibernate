@@ -15,15 +15,11 @@ public class UserServiceImp implements UserService {
    @Autowired
    private UserDao userDao;
 
+
    @Transactional
    @Override
-   public void add(User user) {
-      userDao.add(user);
-   }
-
-   @Override
-   public void addCarUser(User user, Car car) {
-      userDao.addCarUser(user, car);
+   public void add(String name, String lastName, String email, String car_model, int series) {
+      userDao.add(name, lastName, email, car_model, series);
    }
 
    @Transactional(readOnly = true)
@@ -32,17 +28,7 @@ public class UserServiceImp implements UserService {
       return userDao.listUsers();
    }
 
-   @Override
-   public User getUserByCar(String model, int series) {
-      return userDao.getUserByCar(model, series);
-   }
-
    @Transactional
-   @Override
-   public void addCar(Car car) {
-      userDao.addCar(car);
-   }
-
    @Override
    public User findUserByCar(String model, int series) {
       return userDao.findUserByCar(model, series);
