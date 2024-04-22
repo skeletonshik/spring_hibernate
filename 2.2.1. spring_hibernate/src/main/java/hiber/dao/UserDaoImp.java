@@ -20,18 +20,11 @@ public class UserDaoImp implements UserDao {
 
     @Autowired
     private SessionFactory sessionFactory;
-    @PersistenceContext
-    EntityManager entityManager;
 
 
     @Override
-    public void add(String name, String lastName, String email, String car_model, int series) {
-        User newUSer = new User(name, lastName, email);
-        entityManager.persist(newUSer);
-        Car car = new Car(car_model, series);
-        car.setUser(newUSer);
-        entityManager.persist(car);
-        entityManager.close();
+    public void add(User newUser) {
+        sessionFactory.getCurrentSession().save(newUser);
     }
 
     @Override
@@ -45,7 +38,7 @@ public class UserDaoImp implements UserDao {
     public User findUserByCar(String model, int series) {
         Session session = sessionFactory.getCurrentSession();
         Query<User> query = session.createQuery(
-                "SELECT car.user FROM Car car WHERE car.model = :model AND car.series = :series", User.class);
+                "SELECT u FROM User u JOIN u.car c WHERE c.model = :model AND c.series = :series", User.class);
         query.setParameter("model", model);
         query.setParameter("series", series);
 

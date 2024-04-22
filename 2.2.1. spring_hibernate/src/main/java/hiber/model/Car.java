@@ -4,13 +4,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "newtype.cars")
 public class Car {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     @Column(name = "model")
     private String model;
@@ -51,19 +48,10 @@ public class Car {
         this.series = series;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public String toString() {
         return "Car{" +
                 "id=" + id +
-                ", user=" + user +
                 ", model='" + model + '\'' +
                 ", series=" + series +
                 '}';

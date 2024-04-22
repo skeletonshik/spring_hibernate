@@ -18,8 +18,8 @@ public class UserServiceImp implements UserService {
 
    @Transactional
    @Override
-   public void add(String name, String lastName, String email, String car_model, int series) {
-      userDao.add(name, lastName, email, car_model, series);
+   public void add(User newUser) {
+      userDao.add(newUser);
    }
 
    @Transactional(readOnly = true)
